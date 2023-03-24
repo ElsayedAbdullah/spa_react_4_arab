@@ -7,6 +7,7 @@ import Home from './pages/Home/Home';
 
 // import
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { useContext } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 
@@ -14,7 +15,7 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
-    errorElement: <h1>SORROY.........</h1>
+    errorElement: <ErrorPage />
   },
 
   {
