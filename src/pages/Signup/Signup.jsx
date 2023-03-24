@@ -1,6 +1,6 @@
 import Header from '../../comp/Header/Header';
 import Footer from '../../comp/Footer/Footer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/config';
@@ -15,17 +15,17 @@ const Signup = () => {
 
   const [firebaseError, setFirebaseError] = useState('');
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
     // sign in and verified email
-    if (user) {
-      if (user.emailVerified) {
-        navigate('/');
-      }
-    }
+    // if (user) {
+    //   if (user.emailVerified) {
+    //     navigate('/');
+    //   }
+    // }
   });
 
   const handleSubmit = (e) => {
@@ -100,30 +100,28 @@ const Signup = () => {
 
   // signin without email verification
   if (user) {
-    if (!user.emailVerified) {
-      return (
-        <>
-          <Header />
-          <main>
-            <div>
-              <p>we send you an email to verify your account</p>
-              <button
-                className='del'
-                onClick={() => {
-                  // sendEmailVerification
-                  sendEmailVerification(auth.currentUser).then(() => {
-                    console.log('Email verification sent!');
-                  });
-                }}
-              >
-                send again
-              </button>
-            </div>
-          </main>
-          <Footer />
-        </>
-      );
-    }
+    return (
+      <>
+        <Header />
+        <main>
+          <div>
+            <p>we send you an email to verify your account</p>
+            <button
+              className='del'
+              onClick={() => {
+                // sendEmailVerification
+                sendEmailVerification(auth.currentUser).then(() => {
+                  console.log('Email verification sent!');
+                });
+              }}
+            >
+              send again
+            </button>
+          </div>
+        </main>
+        <Footer />
+      </>
+    );
   }
 
   // not sign in

@@ -8,7 +8,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/config';
 import { Link } from 'react-router-dom';
 import Loading from '../../comp/Loading/Loading';
-import { sendEmailVerification } from 'firebase/auth';
+// import { sendEmailVerification } from 'firebase/auth';
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
@@ -34,7 +34,7 @@ const Home = () => {
       )}
 
       {/* Sign in and not verified */}
-      {user && !user.emailVerified && (
+      {/* {user && !user.emailVerified && (
         <main>
           <div>
             <h1>Welcome {user.displayName} ... 👋</h1>
@@ -52,10 +52,10 @@ const Home = () => {
             </button>
           </div>
         </main>
-      )}
+      )} */}
 
       {/* Sign in and verified */}
-      {user && user.emailVerified && (
+      {user && (
         <main className='home'>
           {/* OPIONS (filtered data) */}
           <section className='parent-of-btns flex mtt'>

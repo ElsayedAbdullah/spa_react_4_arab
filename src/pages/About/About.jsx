@@ -15,11 +15,11 @@ const About = () => {
   useEffect(() => {
     !user && !loading && navigate('/');
 
-    if (user) {
-      if (!user.emailVerified) {
-        navigate('/');
-      }
-    }
+    // if (user) {
+    //   if (!user.emailVerified) {
+    //     navigate('/');
+    //   }
+    // }
   });
 
   return (
@@ -38,7 +38,7 @@ const About = () => {
       )}
 
       {/* Sign in and verified */}
-      {user && user.emailVerified && (
+      {user && (
         <>
           <Helmet>
             <title>About Page</title>
