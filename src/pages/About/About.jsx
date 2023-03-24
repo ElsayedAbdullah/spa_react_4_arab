@@ -1,6 +1,6 @@
+// @ts-nocheck
 import Header from '../../comp/Header/Header';
 import Footer from '../../comp/Footer/Footer';
-import MainContent from '../../comp/MainContent/MainContent';
 import { Helmet } from 'react-helmet-async';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/config';
@@ -22,43 +22,34 @@ const About = () => {
     }
   });
 
-  if (loading) {
-    return (
-      <>
-        <Header />
-        <Loading />
-        <Footer />
-      </>
-    );
-  }
+  return (
+    <>
+      <Header />
+      {/* Loading */}
+      {loading && <Loading />}
 
-  if (error) {
-    return (
-      <>
-        <Header />
-        <main>
-          <p>Error: {error}</p>
-        </main>
-        <Footer />
-      </>
-    );
-  }
+      {/* error */}
+      {error && (
+        <>
+          <main>
+            <div>Error: {error}</div>
+          </main>
+        </>
+      )}
 
-  if (user) {
-    if (user.emailVerified) {
-      return (
+      {/* Sign in and verified */}
+      {user && user.emailVerified && (
         <>
           <Helmet>
             <title>About Page</title>
           </Helmet>
-          <Header />
-          {user && <MainContent pageName='About Page' />}
-
-          <Footer />
+          {user && <main>About Page</main>}
         </>
-      );
-    }
-  }
+      )}
+
+      <Footer />
+    </>
+  );
 };
 
 export default About;

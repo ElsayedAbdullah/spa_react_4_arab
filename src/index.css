@@ -130,3 +130,50 @@ form button:hover {
 form button:active {
   scale: 0.95;
 }
+
+span {
+  animation: heart 2s infinite linear;
+}
+
+@keyframes heart {
+  0%,
+  100% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.main-list {
+  padding: 20px;
+  font-size: 19px;
+  position: relative;
+}
+
+.main-link:hover,
+.main-link.active {
+  color: cyan;
+}
+
+main {
+  height: calc(100vh - 133px);
+  font-size: 30px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+@media (max-width: 600px) {
+  main {
+    font-size: 20px;
+  }
+}

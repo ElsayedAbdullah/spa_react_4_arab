@@ -21,6 +21,7 @@
   font-size: 15px;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 20px;
 }
 .forgot-pass:hover {
   opacity: 0.7;
