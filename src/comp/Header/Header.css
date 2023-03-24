@@ -1,0 +1,18 @@
+.light .myheader .teal {
+  background-color: teal;
+}
+
+.hide-when-mobile {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* ==================
+    3. header of mobile
+===================== */
+@media (max-width: 600px) {
+  .hide-when-mobile {
+    flex-direction: column;
+  }
+}

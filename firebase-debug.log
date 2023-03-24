@@ -1,0 +1,21 @@
+[debug] [2023-03-24T07:33:32.275Z] ----------------------------------------------------------------------
+[debug] [2023-03-24T07:33:32.277Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\sayed\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-03-24T07:33:32.277Z] CLI Version:   11.25.1
+[debug] [2023-03-24T07:33:32.278Z] Platform:      win32
+[debug] [2023-03-24T07:33:32.278Z] Node Version:  v18.13.0
+[debug] [2023-03-24T07:33:32.279Z] Time:          Fri Mar 24 2023 09:33:32 GMT+0200 (توقيت شرق أوروبا الرسمي)
+[debug] [2023-03-24T07:33:32.279Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-03-24T07:33:32.288Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-03-24T07:33:32.289Z] > authorizing via signed-in user (sayedaladway@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  F:\react\react_ali_hassan\dark_mode
+
