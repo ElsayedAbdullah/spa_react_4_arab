@@ -16,6 +16,12 @@
   border-radius: 5px;
   margin-right: 15px;
   color: #fff;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.home .parent-of-btns button.active {
+  opacity: 1;
 }
 
 .home select {
@@ -86,18 +92,6 @@
 /* ==============================
 3- Add new task BTN
 =================================*/
-
-.home .add-task-btn {
-  background-color: teal;
-  font-size: 16px;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 5px;
-  margin-bottom: 44px;
-  color: #fff;
-  cursor: pointer;
-}
-
 .home .add-task-btn .fa-plus {
   font-size: 14px;
 }

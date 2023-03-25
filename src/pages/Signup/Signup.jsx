@@ -31,15 +31,13 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
+      .then(function (userCredential) {
         const user = userCredential.user;
-        console.log(user);
-
-        // sendEmailVerification
-        sendEmailVerification(auth.currentUser).then(() => {
-          console.log('Email verification sent!');
-        });
+        if (user && user.emailVerified === false) {
+          sendEmailVerification(auth.currentUser).then(function () {
+            console.log('email verification sent to user');
+          });
+        }
 
         // updateProfile
         updateProfile(auth.currentUser, {
@@ -91,7 +89,9 @@ const Signup = () => {
       <>
         <Header />
         <main>
-          <p>Error: {error}</p>
+          <p>
+            Error: <>{error}</>
+          </p>
         </main>
         <Footer />
       </>
@@ -107,7 +107,7 @@ const Signup = () => {
           <div>
             <p>we send you an email to verify your account</p>
             <button
-              className='del'
+              className='del mt-2'
               onClick={() => {
                 // sendEmailVerification
                 sendEmailVerification(auth.currentUser).then(() => {

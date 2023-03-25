@@ -6,6 +6,7 @@ import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/aut
 import { auth } from '../../firebase/config';
 import { useState } from 'react';
 import './Signin.css';
+import Modal from '../../comp/Modal/Modal';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const Signin = () => {
   const [firebaseError, setFirebaseError] = useState('');
 
   const [showCheckingText, setShowCheckingText] = useState(false);
-  const [showForgotForm, setShowForgotForm] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -45,6 +46,24 @@ const Signin = () => {
         }
       });
   };
+
+  // modal form submit
+  const modalSubmit = (e) => {
+    e.preventDefault();
+    sendPasswordResetEmail(auth, resetEmail)
+      .then(() => {
+        setShowCheckingText(true);
+        console.log('Password reset email sent!');
+      })
+      .catch((error) => {
+        console.log(error.code);
+        // ..
+      });
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
   return (
     <>
       <Helmet>
@@ -53,41 +72,69 @@ const Signin = () => {
       <Header />
 
       <main>
-        <form
-          className={`forgot-password ${showForgotForm}`}
-          onSubmit={(e) => {
-            e.preventDefault();
-            sendPasswordResetEmail(auth, resetEmail)
-              .then(() => {
-                setShowCheckingText(true);
-                console.log('Password reset email sent!');
-              })
-              .catch((error) => {
-                console.log(error.code);
-                // ..
-              });
-          }}
-        >
+        {/* Modal */}
+        {/* {showModal && (
           <div
-            className='close'
+            className='modal-parent'
             onClick={() => {
-              setShowForgotForm('');
+              setShowModal(false);
             }}
           >
-            <i className='fa-solid fa-xmark'></i>
-          </div>
+            <form
+              className={`modal`}
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendPasswordResetEmail(auth, resetEmail)
+                  .then(() => {
+                    setShowCheckingText(true);
+                    console.log('Password reset email sent!');
+                  })
+                  .catch((error) => {
+                    console.log(error.code);
+                    // ..
+                  });
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <div
+                className='close'
+                onClick={() => {
+                  setShowModal(false);
+                }}
+              >
+                <i className='fa-solid fa-xmark'></i>
+              </div>
 
-          <input
-            onChange={(e) => {
-              setResetEmail(e.target.value);
-            }}
-            type='email'
-            placeholder='Email'
-            required
-          />
-          <button>Reset Password</button>
-          {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
-        </form>
+              <input
+                onChange={(e) => {
+                  setResetEmail(e.target.value);
+                }}
+                type='email'
+                placeholder='Email'
+                required
+              />
+              <button>Reset Password</button>
+              {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
+            </form>
+          </div>
+        )} */}
+
+        {showModal && (
+          <Modal closeModal={closeModal} modalSubmit={modalSubmit}>
+            <input
+              onChange={(e) => {
+                setResetEmail(e.target.value);
+              }}
+              type='email'
+              placeholder='Email'
+              required
+            />
+            <button>Reset Password</button>
+            {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
+          </Modal>
+        )}
 
         <form onSubmit={handleSubmit}>
           <input
@@ -113,7 +160,7 @@ const Signin = () => {
           <p
             className='forgot-pass'
             onClick={() => {
-              setShowForgotForm('show');
+              setShowModal(true);
             }}
           >
             forgot Password?

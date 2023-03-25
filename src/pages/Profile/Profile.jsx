@@ -16,6 +16,7 @@ const Profile = () => {
 
   useEffect(() => {
     !user && !loading && navigate('/');
+    user && !user.emailVerified && navigate('/');
   });
 
   if (loading) {
@@ -33,7 +34,9 @@ const Profile = () => {
       <>
         <Header />
         <main>
-          <p>Error: {error}</p>
+          <p>
+            Error: <>{error}</>
+          </p>
         </main>
         <Footer />
       </>
@@ -45,10 +48,10 @@ const Profile = () => {
       <>
         <Helmet>
           <title>Profile Page</title>
-          <meta name='description' content='JAVASCRIPTTTTTTTTTTTTTTTTTTTTT' />
+          <meta name='description' content='Profile' />
         </Helmet>
         <Header />
-        {user && (
+        {user && user.emailVerified && (
           <main>
             <div className='profile-content'>
               {user.displayName && (
@@ -71,7 +74,7 @@ const Profile = () => {
                 <Moment fromNow date={user.metadata.lastSignInTime} />
               </h1>
               <button
-                className='del'
+                className='del mt-2'
                 onClick={() => {
                   const currentUser = auth.currentUser;
                   deleteUser(currentUser)

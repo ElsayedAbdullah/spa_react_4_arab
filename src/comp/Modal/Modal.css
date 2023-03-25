@@ -1,0 +1,52 @@
+.modal-parent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(5px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scale 0.4s linear;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  width: 400px;
+  height: 333px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: scale 0.4s ease-in-out;
+}
+
+@keyframes scale {
+  from {
+    scale: 0;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+.close .fa-xmark {
+  font-size: 29px;
+  color: #444;
+  position: absolute;
+  top: 17px;
+  right: 22px;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.close .fa-xmark:hover {
+  color: orange;
+  transform: rotate(180deg);
+}

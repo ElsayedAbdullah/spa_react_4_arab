@@ -177,3 +177,47 @@ main {
     font-size: 20px;
   }
 }
+
+.center {
+  text-align: center;
+}
+
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.mt-3 {
+  margin-top: 3rem;
+}
+
+.teal-btn {
+  background-color: teal;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.teal-btn:hover {
+  background-color: #02a0a0;
+}
+
+.del {
+  background-color: orangered;
+  color: #fff;
+  border: 0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.2s;
+}
+
+.del:hover {
+  background-color: rgb(248, 91, 33);
+}

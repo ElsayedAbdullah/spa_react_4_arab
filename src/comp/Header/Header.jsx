@@ -1,6 +1,5 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import './Header.css';
-import '../../theme.css';
 import { useContext } from 'react';
 import { ThemeContext } from '../../context/ThemeContext';
 
@@ -58,7 +57,9 @@ const Header = () => {
                     });
                 }}
               >
-                <Link className='main-link'>Sign out</Link>
+                <p className='main-link' style={{ cursor: 'pointer' }}>
+                  Sign out
+                </p>
               </li>
               <li className='main-list'>
                 <NavLink className='main-link' to='/about'>

@@ -8,10 +8,22 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/config';
 import { Link } from 'react-router-dom';
 import Loading from '../../comp/Loading/Loading';
+import { useState } from 'react';
+import Modal from '../../comp/Modal/Modal';
 // import { sendEmailVerification } from 'firebase/auth';
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
+  const [showModal, setShowModal] = useState(false);
+
+  // modal form submit
+  const modalSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -59,7 +71,7 @@ const Home = () => {
         <main className='home'>
           {/* OPIONS (filtered data) */}
           <section className='parent-of-btns flex mtt'>
-            <button>Newest first</button>
+            <button className='active'>Newest first</button>
 
             <button>Oldest first</button>
             <select id='browsers'>
@@ -85,11 +97,33 @@ const Home = () => {
           </section>
 
           {/* Add new task BTN */}
-          <section className='mt'>
-            <button className='add-task-btn'>
+          <section className='mt-1'>
+            <button className='add-task-btn teal-btn' onClick={() => setShowModal(true)}>
               Add new task <i className='fa-solid fa-plus'></i>
             </button>
           </section>
+
+          {showModal && (
+            <Modal closeModal={closeModal} modalSubmit={modalSubmit}>
+              <div style={{ textAlign: 'start' }}>
+                <input onChange={(eo) => {}} placeholder='Add title' type='text' required />
+
+                <div className='flex' style={{ gap: '12px', alignItems: 'flex-start' }}>
+                  <input onChange={(eo) => {}} placeholder='details' type='text' required />
+
+                  <button type='button'>Add</button>
+                </div>
+
+                <button
+                  onClick={(eo) => {
+                    eo.preventDefault();
+                  }}
+                >
+                  Submit
+                </button>
+              </div>
+            </Modal>
+          )}
         </main>
       )}
       <Footer />

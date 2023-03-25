@@ -10,6 +10,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { useContext } from 'react';
 import { ThemeContext } from './context/ThemeContext';
+import EditTask from './pages/EditTask/EditTask';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,6 @@ const router = createBrowserRouter([
     element: <Home />,
     errorElement: <ErrorPage />
   },
-
   {
     path: '/about',
     element: <About />
@@ -25,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: <Profile />
+  },
+  {
+    path: '/edit-task',
+    element: <EditTask />
   },
   {
     path: '/signin',
