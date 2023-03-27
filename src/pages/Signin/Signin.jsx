@@ -47,20 +47,6 @@ const Signin = () => {
       });
   };
 
-  // modal form submit
-  const modalSubmit = (e) => {
-    e.preventDefault();
-    sendPasswordResetEmail(auth, resetEmail)
-      .then(() => {
-        setShowCheckingText(true);
-        console.log('Password reset email sent!');
-      })
-      .catch((error) => {
-        console.log(error.code);
-        // ..
-      });
-  };
-
   const closeModal = () => {
     setShowModal(false);
   };
@@ -73,16 +59,18 @@ const Signin = () => {
 
       <main>
         {/* Modal */}
-        {/* {showModal && (
-          <div
-            className='modal-parent'
-            onClick={() => {
-              setShowModal(false);
-            }}
-          >
-            <form
-              className={`modal`}
-              onSubmit={(e) => {
+        {showModal && (
+          <Modal closeModal={closeModal}>
+            <input
+              onChange={(e) => {
+                setResetEmail(e.target.value);
+              }}
+              type='email'
+              placeholder='Email'
+              required
+            />
+            <button
+              onClick={(e) => {
                 e.preventDefault();
                 sendPasswordResetEmail(auth, resetEmail)
                   .then(() => {
@@ -94,44 +82,9 @@ const Signin = () => {
                     // ..
                   });
               }}
-              onClick={(e) => {
-                e.stopPropagation();
-              }}
             >
-              <div
-                className='close'
-                onClick={() => {
-                  setShowModal(false);
-                }}
-              >
-                <i className='fa-solid fa-xmark'></i>
-              </div>
-
-              <input
-                onChange={(e) => {
-                  setResetEmail(e.target.value);
-                }}
-                type='email'
-                placeholder='Email'
-                required
-              />
-              <button>Reset Password</button>
-              {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
-            </form>
-          </div>
-        )} */}
-
-        {showModal && (
-          <Modal closeModal={closeModal} modalSubmit={modalSubmit}>
-            <input
-              onChange={(e) => {
-                setResetEmail(e.target.value);
-              }}
-              type='email'
-              placeholder='Email'
-              required
-            />
-            <button>Reset Password</button>
+              Reset Password
+            </button>
             {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
           </Modal>
         )}

@@ -95,3 +95,11 @@
 .home .add-task-btn .fa-plus {
   font-size: 14px;
 }
+
+.tasks-list li {
+  list-style-type: circle;
+  font-size: 16px;
+  list-style-position: inside;
+  color: #333;
+  margin-bottom: 10px;
+}

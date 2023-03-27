@@ -1,17 +1,19 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyA_8O43UPZ2cmuxmg02Alm2TW0QLF6Tgo0',
-  authDomain: 'react-proj-f0838.firebaseapp.com',
-  projectId: 'react-proj-f0838',
-  storageBucket: 'react-proj-f0838.appspot.com',
-  messagingSenderId: '968974309255',
-  appId: '1:968974309255:web:8cfeae82d64f50bdfa6522'
+  apiKey: 'AIzaSyAibkBSak5BtAAFQ3QdrlFI1-p2aiVFfJY',
+  authDomain: 'react-ali-course.firebaseapp.com',
+  projectId: 'react-ali-course',
+  storageBucket: 'react-ali-course.appspot.com',
+  messagingSenderId: '997336479350',
+  appId: '1:997336479350:web:3800295424485f2c425157'
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);

@@ -62,6 +62,7 @@ h1 {
 .fa-sun {
   cursor: pointer;
   font-size: 20px;
+  color: #fff;
 }
 
 /* ==========================
@@ -156,13 +157,17 @@ span {
   position: relative;
 }
 
+.main-list p {
+  color: #fff;
+}
+
 .main-link:hover,
 .main-link.active {
   color: cyan;
 }
 
 main {
-  height: calc(100vh - 133px);
+  min-height: calc(100vh - 133px);
   font-size: 30px;
   font-weight: bold;
   display: flex;

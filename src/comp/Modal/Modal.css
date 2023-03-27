@@ -17,6 +17,7 @@
   padding: 20px;
   width: 400px;
   height: 333px;
+  overflow-y: auto;
   border-radius: 12px;
   display: flex;
   align-items: center;

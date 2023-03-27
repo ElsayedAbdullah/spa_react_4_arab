@@ -1,16 +1,10 @@
 import './Modal.css';
 
-function Modal({ children, closeModal, modalSubmit }) {
+function Modal({ children, closeModal }) {
   return (
-    <div
-      className='modal-parent'
-      onClick={() => {
-        closeModal();
-      }}
-    >
+    <div className='modal-parent' onClick={closeModal}>
       <form
         className={`modal`}
-        onSubmit={modalSubmit}
         onClick={(e) => {
           e.stopPropagation();
         }}

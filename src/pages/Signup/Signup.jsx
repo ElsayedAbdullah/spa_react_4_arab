@@ -1,6 +1,6 @@
 import Header from '../../comp/Header/Header';
 import Footer from '../../comp/Footer/Footer';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from 'firebase/auth';
 import { auth } from '../../firebase/config';
@@ -12,45 +12,39 @@ const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
   const [firebaseError, setFirebaseError] = useState('');
-
-  // const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
     // sign in and verified email
-    // if (user) {
-    //   if (user.emailVerified) {
-    //     navigate('/');
-    //   }
-    // }
+    if (user) {
+      if (user.emailVerified) {
+        navigate('/');
+      }
+    }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-      .then(function (userCredential) {
+      .then((userCredential) => {
+        // Signed in
         const user = userCredential.user;
-        if (user && user.emailVerified === false) {
-          sendEmailVerification(auth.currentUser).then(function () {
-            console.log('email verification sent to user');
-          });
-        }
+        console.log(user);
+        sendEmailVerification(auth.currentUser).then(() => {
+          console.log('Email verification sent!');
+        });
 
-        // updateProfile
         updateProfile(auth.currentUser, {
           displayName: username
         })
           .then(() => {
-            // navigate('/');
+            console.log('username added');
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.code);
           });
-        // navigate('/');
-        // console.log('Congrats');
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -72,15 +66,13 @@ const Signup = () => {
 
   // loading
   if (loading) {
-    if (loading) {
-      return (
-        <>
-          <Header />
-          <Loading />
-          <Footer />
-        </>
-      );
-    }
+    return (
+      <>
+        <Header />
+        <Loading />
+        <Footer />
+      </>
+    );
   }
 
   // error
@@ -89,9 +81,7 @@ const Signup = () => {
       <>
         <Header />
         <main>
-          <p>
-            Error: <>{error}</>
-          </p>
+          <p>Error:{error.message}</p>
         </main>
         <Footer />
       </>
@@ -100,28 +90,30 @@ const Signup = () => {
 
   // signin without email verification
   if (user) {
-    return (
-      <>
-        <Header />
-        <main>
-          <div>
-            <p>we send you an email to verify your account</p>
-            <button
-              className='del mt-2'
-              onClick={() => {
-                // sendEmailVerification
-                sendEmailVerification(auth.currentUser).then(() => {
-                  console.log('Email verification sent!');
-                });
-              }}
-            >
-              send again
-            </button>
-          </div>
-        </main>
-        <Footer />
-      </>
-    );
+    if (!user.emailVerified) {
+      return (
+        <>
+          <Header />
+          <main>
+            <div>
+              <p>we send you an email to verify your account</p>
+              <button
+                className='del mt-2'
+                onClick={() => {
+                  // sendEmailVerification
+                  sendEmailVerification(auth.currentUser).then(() => {
+                    console.log('Email verification sent!');
+                  });
+                }}
+              >
+                send again
+              </button>
+            </div>
+          </main>
+          <Footer />
+        </>
+      );
+    }
   }
 
   // not sign in

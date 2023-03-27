@@ -5,21 +5,20 @@ import './Home.css';
 
 // firbase
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { auth } from '../../firebase/config';
+import { auth, db } from '../../firebase/config';
 import { Link } from 'react-router-dom';
 import Loading from '../../comp/Loading/Loading';
 import { useState } from 'react';
 import Modal from '../../comp/Modal/Modal';
-// import { sendEmailVerification } from 'firebase/auth';
+import { setDoc, doc } from 'firebase/firestore';
+import { sendEmailVerification } from 'firebase/auth';
 
 const Home = () => {
   const [user, loading] = useAuthState(auth);
   const [showModal, setShowModal] = useState(false);
-
-  // modal form submit
-  const modalSubmit = (e) => {
-    e.preventDefault();
-  };
+  const [task, setTask] = useState('');
+  const [title, setTitle] = useState('');
+  const [tasks, setTasks] = useState([]);
 
   const closeModal = () => {
     setShowModal(false);
@@ -46,13 +45,13 @@ const Home = () => {
       )}
 
       {/* Sign in and not verified */}
-      {/* {user && !user.emailVerified && (
+      {user && !user.emailVerified && (
         <main>
           <div>
             <h1>Welcome {user.displayName} ... 👋</h1>
             <p>Please verify your email to continue</p>
             <button
-              className='del'
+              className='del mt-2'
               onClick={() => {
                 // sendEmailVerification
                 sendEmailVerification(auth.currentUser).then(() => {
@@ -64,10 +63,10 @@ const Home = () => {
             </button>
           </div>
         </main>
-      )} */}
+      )}
 
       {/* Sign in and verified */}
-      {user && (
+      {user && user.emailVerified && (
         <main className='home'>
           {/* OPIONS (filtered data) */}
           <section className='parent-of-btns flex mtt'>
@@ -75,9 +74,9 @@ const Home = () => {
 
             <button>Oldest first</button>
             <select id='browsers'>
-              <option value='ddddd'> All Tasks </option>
-              <option value='dddddd'> Completed </option>
-              <option value='dddddd'> Not Completed </option>
+              <option value='all-tasks'> All Tasks </option>
+              <option value='completed'> Completed </option>
+              <option value='not-completed'> Not Completed </option>
             </select>
           </section>
 
@@ -104,19 +103,64 @@ const Home = () => {
           </section>
 
           {showModal && (
-            <Modal closeModal={closeModal} modalSubmit={modalSubmit}>
+            <Modal closeModal={closeModal}>
               <div style={{ textAlign: 'start' }}>
-                <input onChange={(eo) => {}} placeholder='Add title' type='text' required />
+                <input
+                  onChange={(eo) => {
+                    setTitle(eo.target.value);
+                  }}
+                  placeholder='Add title'
+                  type='text'
+                  value={title}
+                  required
+                />
 
                 <div className='flex' style={{ gap: '12px', alignItems: 'flex-start' }}>
-                  <input onChange={(eo) => {}} placeholder='details' type='text' required />
+                  <input
+                    onChange={(eo) => {
+                      setTask(eo.target.value);
+                    }}
+                    placeholder='details'
+                    type='text'
+                    value={task}
+                  />
 
-                  <button type='button'>Add</button>
+                  <button
+                    type='button'
+                    onClick={() => {
+                      if (task) {
+                        tasks.push(task);
+                        setTask('');
+                        console.log(tasks);
+                      }
+                    }}
+                  >
+                    Add
+                  </button>
                 </div>
 
+                <ul className='tasks-list'>
+                  {tasks.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+
                 <button
-                  onClick={(eo) => {
-                    eo.preventDefault();
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    const taskID = new Date().getTime();
+                    try {
+                      await setDoc(doc(db, user.uid, `${taskID}`), {
+                        id: taskID,
+                        title,
+                        tasks
+                      });
+                      console.log('Data added');
+                      setTitle('');
+                      setTasks([]);
+                    } catch (e) {
+                      console.error('Error adding document: ', e);
+                    }
                   }}
                 >
                   Submit
@@ -126,6 +170,7 @@ const Home = () => {
           )}
         </main>
       )}
+
       <Footer />
     </>
   );
