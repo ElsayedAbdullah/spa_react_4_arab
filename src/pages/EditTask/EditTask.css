@@ -9,6 +9,7 @@
 .edit-task {
   min-height: calc(100vh - 133px);
   text-align: center;
+  padding: 20px 0 50px;
 }
 
 /* ==============================
@@ -66,10 +67,11 @@
   background-color: rgb(65, 71, 84);
   padding: 16px;
   border-radius: 5px;
-  transition: 0.2s;
   justify-content: space-between;
   margin-bottom: 11px;
   color: #fff;
+  transition: 0.3s;
+  border-left: 4px solid transparent;
 }
 
 .edit-task .card-task:hover {
@@ -78,6 +80,7 @@
 }
 
 .light .edit-task .card-task:hover {
+  background-color: rgb(74, 82, 97);
   border-left: 4px solid teal;
 }
 
@@ -85,6 +88,33 @@
   padding-right: 19px;
   color: rgb(237, 181, 181);
   cursor: pointer;
+}
+
+.add-new-task {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  box-shadow: 0 5px 30px 0 rgb(0 0 0 / 15%);
+  background-color: rgb(65, 71, 84);
+  padding: 16px;
+  border-radius: 5px;
+  animation: zoomIn 0.8s;
+}
+
+@keyframes zoomIn {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.add-new-task input {
+  margin-bottom: 0;
 }
 
 /* ==============================

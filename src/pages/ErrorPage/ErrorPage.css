@@ -1,8 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans+Narrow');
-body {
-  overflow: hidden;
-  font-family: 'Open Sans', sans-serif;
-}
 
 .not-found {
   position: relative;

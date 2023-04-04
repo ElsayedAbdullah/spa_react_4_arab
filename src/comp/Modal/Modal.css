@@ -14,13 +14,13 @@
 
 .modal {
   background-color: white;
-  padding: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 20px 20px 20px 40px;
   width: 400px;
   height: 333px;
   overflow-y: auto;
   border-radius: 12px;
   display: flex;
-  align-items: center;
   justify-content: center;
   position: relative;
   animation: scale 0.4s ease-in-out;
@@ -37,8 +37,8 @@
   }
 }
 
-.close .fa-xmark {
-  font-size: 29px;
+.close {
+  font-size: 24px;
   color: #444;
   position: absolute;
   top: 17px;
@@ -47,7 +47,7 @@
   cursor: pointer;
 }
 
-.close .fa-xmark:hover {
+.close:hover {
   color: orange;
   transform: rotate(180deg);
 }

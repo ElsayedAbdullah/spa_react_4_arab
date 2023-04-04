@@ -8,6 +8,11 @@ import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Loading from '../../comp/Loading/Loading';
 
+import ReactLoading from 'react-loading';
+
+// i18next
+import { useTranslation } from 'react-i18next';
+
 const Signup = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
@@ -15,6 +20,10 @@ const Signup = () => {
   const [firebaseError, setFirebaseError] = useState('');
   const navigate = useNavigate();
   const [user, loading, error] = useAuthState(auth);
+
+  const [showLoading, setShowLoading] = useState(false);
+
+  const { t } = useTranslation();
 
   useEffect(() => {
     // sign in and verified email
@@ -25,9 +34,10 @@ const Signup = () => {
     }
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
+    setShowLoading(true);
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -62,6 +72,7 @@ const Signup = () => {
             setFirebaseError(errorCode);
         }
       });
+    setShowLoading(false);
   };
 
   // loading
@@ -127,16 +138,16 @@ const Signup = () => {
         <Header />
 
         <main>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} dir='auto'>
             <p style={{ fontSize: '23px', marginBottom: '22px' }}>
-              Create a new account <span>🧡</span>{' '}
+              {t('create-account')} <span>🧡</span>{' '}
             </p>
             <input
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
               type='text'
-              placeholder='Username'
+              placeholder={t('username')}
               required
             />
             <input
@@ -144,7 +155,7 @@ const Signup = () => {
                 setEmail(e.target.value);
               }}
               type='email'
-              placeholder='Email'
+              placeholder={t('email')}
               required
             />
             <input
@@ -152,15 +163,21 @@ const Signup = () => {
                 setPassword(e.target.value);
               }}
               type='password'
-              placeholder='Password'
+              placeholder={t('password')}
               required
             />
-            <button type='submit'>Sign up</button>
+            <button type='submit' style={{ display: 'flex', justifyContent: 'center' }}>
+              {showLoading ? <ReactLoading type={'spin'} color={'white'} height={20} width={20} /> : t('signup')}
+            </button>
             <p className='account'>
-              Already hava an account <Link to='/signin'> Sign-in</Link>
+              {t('have-account')} <Link to='/signin'> {t('signin')}</Link>
             </p>
 
-            {firebaseError !== '' ? <div id='error'>{firebaseError}</div> : null}
+            {firebaseError !== '' ? (
+              <h5 style={{ color: '#FF5722' }} className='mt-2' id='error'>
+                {firebaseError}
+              </h5>
+            ) : null}
           </form>
         </main>
         <Footer />

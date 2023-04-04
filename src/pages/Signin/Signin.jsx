@@ -7,6 +7,10 @@ import { auth } from '../../firebase/config';
 import { useState } from 'react';
 import './Signin.css';
 import Modal from '../../comp/Modal/Modal';
+import ReactLoading from 'react-loading';
+
+// i18next
+import { useTranslation } from 'react-i18next';
 
 const Signin = () => {
   const [email, setEmail] = useState('');
@@ -16,13 +20,17 @@ const Signin = () => {
 
   const [showCheckingText, setShowCheckingText] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
 
   const navigate = useNavigate();
 
+  const { t } = useTranslation();
+
   // form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    setShowLoading(true);
+    await signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -45,6 +53,8 @@ const Signin = () => {
             setFirebaseError(errorCode);
         }
       });
+
+    setShowLoading(false);
   };
 
   const closeModal = () => {
@@ -57,7 +67,7 @@ const Signin = () => {
       </Helmet>
       <Header />
 
-      <main>
+      <main dir='auto'>
         {/* Modal */}
         {showModal && (
           <Modal closeModal={closeModal}>
@@ -66,7 +76,7 @@ const Signin = () => {
                 setResetEmail(e.target.value);
               }}
               type='email'
-              placeholder='Email'
+              placeholder={t('email')}
               required
             />
             <button
@@ -83,7 +93,7 @@ const Signin = () => {
                   });
               }}
             >
-              Reset Password
+              {t('resetPassword')}
             </button>
             {showCheckingText && <p className='check-email'>Please check your email to reset your password.</p>}
           </Modal>
@@ -95,7 +105,7 @@ const Signin = () => {
               setEmail(e.target.value);
             }}
             type='email'
-            placeholder='Email'
+            placeholder={t('email')}
             required
           />
           <input
@@ -103,12 +113,12 @@ const Signin = () => {
               setPassword(e.target.value);
             }}
             type='password'
-            placeholder='Password'
+            placeholder={t('password')}
             required
           />
-          <button>Sign in</button>
+          <button style={{ display: 'flex', justifyContent: 'center' }}>{showLoading ? <ReactLoading type={'spin'} color={'white'} height={20} width={20} /> : t('signin')}</button>
           <p className='account'>
-            Don't hava an account <Link to='/signup'> Sign-up</Link>
+            {t('dont-have-account')} <Link to='/signup'> {t('signup')}</Link>
           </p>
           <p
             className='forgot-pass'
@@ -116,9 +126,13 @@ const Signin = () => {
               setShowModal(true);
             }}
           >
-            forgot Password?
+            {t('forgotPassword')}
           </p>
-          {firebaseError !== '' ? <div id='error'>{firebaseError}</div> : null}
+          {firebaseError !== '' ? (
+            <h5 style={{ color: '#FF5722' }} className='mt-2' id='error'>
+              {firebaseError}
+            </h5>
+          ) : null}
         </form>
       </main>
       <Footer />

@@ -1,0 +1,14 @@
+.show-message {
+  position: fixed;
+  top: 30px;
+  padding: 20px 30px;
+  background-color: #03a9f4;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 55;
+  border-radius: 10px;
+  font-size: 18px;
+  transition: 0.8s;
+}

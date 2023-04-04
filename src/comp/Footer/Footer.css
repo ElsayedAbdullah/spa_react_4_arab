@@ -6,6 +6,19 @@
   color: #fff;
 }
 
+footer p {
+  display: inline-block;
+}
+
+footer p a {
+  text-decoration: underline;
+  transition: 0.2s;
+}
+
+footer p a:hover {
+  opacity: 0.8;
+}
+
 .light .myfooter .teal {
   background-color: teal;
 }

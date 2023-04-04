@@ -6,14 +6,16 @@ import { ThemeContext } from '../../context/ThemeContext';
 // firbase
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '../../firebase/config';
-
 import { signOut } from 'firebase/auth';
+
+// i18next
+import { useTranslation } from 'react-i18next';
 
 const Header = () => {
   const { changeTheme } = useContext(ThemeContext);
   const [user] = useAuthState(auth);
-
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className='myheader'>
@@ -27,16 +29,40 @@ const Header = () => {
         </button>
 
         <ul className='flex'>
+          <li className='main-list lang'>
+            <p>{t('language')}</p>
+
+            <ul className='lang-box'>
+              <li
+                dir='rtl'
+                onClick={() => {
+                  i18n.changeLanguage('ar');
+                }}
+              >
+                <p> العربية</p>
+                {i18n.language === 'ar' && <i className='fa-solid fa-check'></i>}
+              </li>
+
+              <li
+                onClick={() => {
+                  i18n.changeLanguage('en');
+                }}
+              >
+                <p>English</p>
+                {i18n.language === 'en' && <i className='fa-solid fa-check'></i>}
+              </li>
+            </ul>
+          </li>
           {!user && (
             <>
               <li className='main-list'>
                 <NavLink className='main-link' to='/signup'>
-                  Sign up
+                  {t('signup')}
                 </NavLink>
               </li>
               <li className='main-list'>
                 <NavLink className='main-link' to='/signin'>
-                  Sign in
+                  {t('signin')}
                 </NavLink>
               </li>
             </>
@@ -58,17 +84,12 @@ const Header = () => {
                 }}
               >
                 <p className='main-link' style={{ cursor: 'pointer' }}>
-                  Sign out
+                  {t('signout')}
                 </p>
               </li>
               <li className='main-list'>
-                <NavLink className='main-link' to='/about'>
-                  About
-                </NavLink>
-              </li>
-              <li className='main-list'>
                 <NavLink className='main-link' to='/profile'>
-                  Profile
+                  {t('profile')}
                 </NavLink>
               </li>
             </>
