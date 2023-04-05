@@ -11,6 +11,8 @@ import ErrorPage from './pages/ErrorPage/ErrorPage';
 import { useContext } from 'react';
 import { ThemeContext } from './context/ThemeContext';
 import EditTask from './pages/EditTask/EditTask';
+// i18next
+import { useTranslation } from 'react-i18next';
 
 const router = createBrowserRouter([
   {
@@ -42,8 +44,9 @@ const router = createBrowserRouter([
 
 function App() {
   const { theme } = useContext(ThemeContext);
+  const { i18n } = useTranslation();
   return (
-    <div className={`app ${theme}`}>
+    <div className={`app ${theme} ${i18n.language}`}>
       <RouterProvider router={router} />
     </div>
   );
